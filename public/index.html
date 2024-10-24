@@ -53,6 +53,7 @@
                 <h3>
                     <span class="word">Backend&nbsp;&nbsp;Developer </span>
                     <span class="word">Frontend&nbsp;Developer</span>
+                    <span class="word">FullStack&nbsp;Developer</span>
                 </h3>
             </div>
             
@@ -61,12 +62,12 @@
             <div class="info-box">
                 <div class="email-info">
                     <h5>Email :</h5>
-                    <span>tadeoyaya18@gmail.com</span>
+                    <span>tadeactor@gmail.com</span>
                 </div>
             </div>
 
             <div class="btn-box">
-                <a href="Pdf/tadecv.pdf" class="btn" target="_blank">Download cv</a>
+                <a href="Pdf/tadecv.pdf" class="btn" target="_blank">View CV</a>
                 <a href="#contact" class="btn">Hire Me Now!</a>
 				
             </div>
@@ -395,6 +396,19 @@ To showcase my commitment and achievements, I have actively completed final year
                     </div>
                 </div>				
 				
+                <div class="port-box mix web" >
+                    <div class="port-image">
+                        <img src="img/fcy.png" alt="image" >
+                    </div>
+                    <div class="port-content">
+                        <h3>Foreign Currency Management</h3>
+                        <p>
+                            A Next.js application with Tailwind CSS that enables efficient foreign currency management. Features include filtering options, export capabilities to various formats, and an interactive user interface for seamless navigation.
+                        </p>
+                        <!-- <a href="https://github.com/master12-ctr/api"><i class='bx bx-link-external'></i></a> -->
+                    </div>
+                </div>
+
             </div>
 
         </div>
@@ -451,11 +465,6 @@ To showcase my commitment and achievements, I have actively completed final year
           
               var isValid = true;
           
-              // Validate name
-              if (!/^[a-zA-Z]{1,15}$/.test(name)) {
-                document.getElementById("nameError").textContent = "Name must be alphabets and have a maximum size of 15 characters.";
-                isValid = false;
-              }
           
               // Validate email
               if (!/^\S+@\S+\.\S+$/.test(email)) {
@@ -463,17 +472,7 @@ To showcase my commitment and achievements, I have actively completed final year
                 isValid = false;
               }
           
-              // Validate address (optional)
-              if (address !== "" && !/^[a-zA-Z0-9\s]+$/.test(address)) {
-                document.getElementById("addressError").textContent = "Address must contain only alphabets or alphanumeric characters.";
-                isValid = false;
-              }
           
-              // Validate phone number
-              if (!/^\+[0-9]{1,15}$/.test(phoneNumber)) {
-                document.getElementById("phoneNumberError").textContent = "Phone number must start with '+' and contain only digits, with a maximum size of 15 characters.";
-                isValid = false;
-              }
           
               // Validate message
               if (message === "") {
