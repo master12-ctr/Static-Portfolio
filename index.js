@@ -25,7 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const pool = new Pool({
   user: process.env.DATABASE_USER,
   host: 'localhost',
-  database: 'Node portfolio',
+  database: 'nodeportfolio',
   password: process.env.DATABASE_PASSWORD,
   port: 5432,
 });
