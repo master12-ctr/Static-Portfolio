@@ -4,48 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tadese Worku Portfolio</title>
-    <link rel="stylesheet" href="./style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
-        .success-message {
-          color: green;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
         }
+        
+        .success-message {
+            color: green;
+        }
+        
         .error-message {
             color: red;
             font-size: 12px;
         }
         
-        /* Consistent background for all sections */
-        section, header, footer {
-            background: linear-gradient(135deg, #1f242d 0%, #2a2f3a 100%);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, #12f7ff, transparent);
-        }
-        
-        /* Sticky Header */
+        /* Header Styles */
         header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            background: linear-gradient(135deg, #1f242d 0%, #2a2f3a 100%) !important;
+            background: linear-gradient(135deg, #1f242d 0%, #2a2f3a 100%);
             border-bottom: 1px solid rgba(18, 247, 255, 0.2);
             padding: 20px 10%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 70px;
         }
         
         .logo {
@@ -60,151 +49,216 @@
             color: #12f7ff;
         }
         
-        .navlist {
+        /* Desktop Navigation */
+        .desktop-nav {
             display: flex;
             list-style: none;
         }
         
-        .navlist li {
-            margin-left: 20px;
+        .desktop-nav li {
+            margin-left: 25px;
         }
         
-        .navlist li a {
+        .desktop-nav a {
             font-size: 16px;
             color: #fff;
             text-decoration: none;
             font-weight: 500;
             transition: .5s;
-            position: relative;
             padding: 5px 0;
+            position: relative;
         }
         
-        .navlist li a:hover,
-        .navlist li a.active {
+        .desktop-nav a:hover,
+        .desktop-nav a.active {
             color: #12f7ff;
         }
         
-        #menu-icon {
-            font-size: 35px;
+        /* Mobile Menu Button */
+        #mobile-menu-btn {
+            font-size: 32px;
             color: #fff;
-            display: none;
+            background: none;
+            border: none;
             cursor: pointer;
-            z-index: 10001;
+            display: none;
+            padding: 5px;
+            z-index: 1002;
         }
         
-        footer {
-            border-top: 1px solid rgba(18, 247, 255, 0.2);
-            padding: 20px 0;
-            text-align: center;
+        /* Mobile Navigation Overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
         
-        /* Mobile-specific styles */
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(135deg, #1f242d 0%, #2a2f3a 100%);
+            z-index: 1000;
+            transition: left 0.3s ease;
+            padding: 80px 30px 30px;
+            overflow-y: auto;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .mobile-nav.active {
+            left: 0;
+        }
+        
+        .mobile-nav ul {
+            list-style: none;
+        }
+        
+        .mobile-nav li {
+            margin-bottom: 20px;
+        }
+        
+        .mobile-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 12px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .mobile-nav a:hover,
+        .mobile-nav a.active {
+            color: #12f7ff;
+            background: rgba(18, 247, 255, 0.1);
+            border-left: 3px solid #12f7ff;
+            padding-left: 20px;
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: #fff;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
             header {
                 padding: 15px 5%;
             }
             
-            #menu-icon {
-                display: block;
-                position: relative;
-                z-index: 10001;
-            }
-            
-            .navlist {
-                position: fixed;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100vh;
-                background: rgba(31, 36, 45, 0.98);
-                backdrop-filter: blur(10px);
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                justify-content: center;
-                padding-top: 100px;
-                transition: left 0.3s ease;
-                z-index: 9999;
-                margin: 0;
-                visibility: hidden;
-                opacity: 0;
-            }
-            
-            .navlist.active {
-                left: 0;
-                visibility: visible;
-                opacity: 1;
-            }
-            
-            .navlist li {
-                margin: 20px 0;
-                width: 100%;
-                text-align: center;
-            }
-            
-            .navlist li a {
-                display: block;
-                width: 100%;
-                padding: 15px;
-                font-size: 20px;
-                border-bottom: 1px solid rgba(18, 247, 255, 0.1);
-            }
-            
-            /* Hide the second SVG completely on mobile */
-            .home-image .liquid-shape:last-child {
+            .desktop-nav {
                 display: none !important;
             }
             
-            /* Ensure only one photo shows */
-            .home-image svg:nth-of-type(2) {
-                display: none !important;
+            #mobile-menu-btn {
+                display: block !important;
             }
             
-            /* HIDE about section image on mobile */
-            .img-about {
-                display: none !important;
+            .mobile-nav {
+                width: 280px;
             }
             
-            /* Make about content full width on mobile */
-            .about-content {
-                width: 100% !important;
-                padding: 0 !important;
-            }
-            
-            .home-content {
-                margin-top: 70px;
-            }
-            
-            .stats-container {
-                gap: 10px;
-                justify-content: center;
-            }
-            
-            .stat-box {
-                min-width: 100px;
-            }
-        }
-        
-        /* Adjust section padding for fixed header */
-        section {
-            padding-top: 100px;
-        }
-        
-        .home {
-            padding-top: 80px;
-        }
-        
-        @media (max-width: 768px) {
+            /* Adjust section padding for mobile */
             section {
-                padding-top: 80px;
+                padding-top: 80px !important;
             }
             
             .home {
-                padding-top: 70px;
+                padding-top: 90px !important;
             }
         }
         
-        /* New styles for stats section */
+        /* Section Styles */
+        section {
+            background: linear-gradient(135deg, #1f242d 0%, #2a2f3a 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 120px 10% 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #12f7ff, transparent);
+        }
+        
+        .home {
+            padding-top: 100px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        @media (max-width: 992px) {
+            .home {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .home-image {
+                order: -1;
+            }
+        }
+        
+        /* Home Content */
+        .home-content h1 {
+            font-size: 3.5rem;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        
+        .change-text {
+            margin-bottom: 20px;
+        }
+        
+        .change-text h3 {
+            font-size: 1.8rem;
+            color: #fff;
+        }
+        
+        .change-text .word {
+            color: #12f7ff;
+        }
+        
+        .home-content p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #aaa;
+            margin-bottom: 25px;
+        }
+        
+        /* Stats Section */
         .stats-container {
             display: flex;
             flex-wrap: wrap;
@@ -233,12 +287,196 @@
             opacity: 0.9;
         }
         
+        /* Info Box */
+        .info-box {
+            background: rgba(18, 247, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 3px solid #12f7ff;
+        }
+        
+        .email-info h5 {
+            color: #12f7ff;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .email-info span {
+            color: #fff;
+            font-size: 16px;
+        }
+        
+        /* Buttons */
+        .btn-box {
+            margin: 25px 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: #12f7ff;
+            color: #1f242d;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #12f7ff;
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: #12f7ff;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(18, 247, 255, 0.2);
+        }
+        
+        /* Social Icons */
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .social-icons a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(18, 247, 255, 0.1);
+            border-radius: 50%;
+            color: #12f7ff;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-icons a:hover {
+            background: #12f7ff;
+            color: #1f242d;
+            transform: translateY(-5px);
+        }
+        
+        /* Home Image */
+        .home-image {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .img-box {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            border: 5px solid rgba(18, 247, 255, 0.2);
+        }
+        
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .liquid-shape {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        
+        /* About Section */
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .img-about {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .img-about img {
+            width: 400px;
+            height: 400px;
+            border-radius: 20px;
+            object-fit: cover;
+            border: 5px solid rgba(18, 247, 255, 0.2);
+        }
+        
+        .about-content span {
+            color: #12f7ff;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        
+        .about-content h2 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin: 10px 0;
+        }
+        
+        .about-content h3 {
+            font-size: 1.5rem;
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        .about-content p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .about {
+                grid-template-columns: 1fr;
+            }
+            
+            .img-about {
+                display: none;
+            }
+        }
+        
+        /* Main Text Styles */
+        .main-text {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .main-text span {
+            color: #12f7ff;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+        
+        .main-text h2 {
+            font-size: 2.5rem;
+            color: #fff;
+            margin-top: 10px;
+        }
+        
         /* Project Experience Styles */
         .experience-item {
             background: rgba(18, 247, 255, 0.05);
             border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
+            padding: 25px;
+            margin-bottom: 30px;
             border-left: 3px solid #12f7ff;
             transition: transform 0.3s ease;
         }
@@ -283,6 +521,7 @@
             padding: 8px 15px;
             border-radius: 5px;
             font-size: 14px;
+            color: #fff;
         }
         
         .app-store-link {
@@ -348,6 +587,7 @@
         
         .skill-name span {
             font-size: 14px;
+            color: #fff;
         }
         
         .skill-percentage {
@@ -355,115 +595,26 @@
             font-weight: 600;
         }
         
-        /* Technical Highlights Styles */
-        .highlight-box {
-            background: rgba(18, 247, 255, 0.05);
-            border-radius: 10px;
-            padding: 20px;
+        .bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            height: 5px;
+        }
+        
+        .bar span {
+            display: block;
             height: 100%;
-            transition: transform 0.3s ease;
+            background: linear-gradient(90deg, #12f7ff, #1e9bff);
+            border-radius: 3px;
         }
         
-        .highlight-box:hover {
-            transform: translateY(-5px);
-            background: rgba(18, 247, 255, 0.08);
-        }
-        
-        .highlight-title {
-            font-size: 20px;
-            color: #12f7ff;
-            margin-bottom: 15px;
-            min-height: 60px;
-        }
-        
-        .highlight-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 15px;
-        }
-        
-        .highlight-tag {
-            background: rgba(18, 247, 255, 0.15);
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            color: #12f7ff;
-        }
-        
-        .highlight-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            color: #12f7ff;
-            text-decoration: none;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-        
-        .highlight-link:hover {
-            text-decoration: underline;
-        }
-        
-        /* Projects Section Styles */
-        .projects-section {
-            padding: 80px 10%;
-        }
-        
-        .project-box {
-            background: rgba(18, 247, 255, 0.05);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
-            transition: transform 0.3s ease;
-        }
-        
-        .project-box:hover {
-            transform: translateY(-5px);
-            background: rgba(18, 247, 255, 0.08);
-        }
-        
-        .project-title {
-            font-size: 22px;
-            color: #12f7ff;
-            margin-bottom: 15px;
-        }
-        
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #12f7ff;
-            text-decoration: none;
-            margin-top: 15px;
-            padding: 8px 16px;
-            background: rgba(18, 247, 255, 0.1);
-            border-radius: 5px;
-            transition: background 0.3s ease;
-        }
-        
-        .project-link:hover {
-            background: rgba(18, 247, 255, 0.2);
-            text-decoration: none;
-        }
-        
-        /* Education & Certifications Styles */
-        .education-section {
-            padding: 80px 10%;
-        }
-        
+        /* Education Section */
         .education-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 40px;
             margin-top: 40px;
-        }
-        
-        @media (max-width: 992px) {
-            .education-content {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
         }
         
         .education-item {
@@ -482,6 +633,7 @@
         .education-details {
             color: #aaa;
             font-size: 14px;
+            margin-bottom: 15px;
         }
         
         .certification-list {
@@ -494,6 +646,7 @@
             margin-bottom: 12px;
             padding-left: 20px;
             position: relative;
+            color: #aaa;
         }
         
         .certification-list li::before {
@@ -504,15 +657,101 @@
             font-size: 18px;
         }
         
-        /* Get In Touch Styles */
-        .contact-section {
-            padding: 80px 10%;
-            text-align: center;
+        /* Technical Highlights */
+        .portfolio-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
         }
         
+        .port-box {
+            transition: transform 0.3s ease;
+        }
+        
+        .port-box:hover {
+            transform: translateY(-10px);
+        }
+        
+        .highlight-box {
+            background: rgba(18, 247, 255, 0.05);
+            border-radius: 10px;
+            padding: 25px;
+            height: 100%;
+            border: 1px solid rgba(18, 247, 255, 0.1);
+        }
+        
+        .highlight-title {
+            font-size: 20px;
+            color: #12f7ff;
+            margin-bottom: 15px;
+            min-height: 60px;
+        }
+        
+        .highlight-box p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .highlight-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        
+        .highlight-tag {
+            background: rgba(18, 247, 255, 0.15);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            color: #12f7ff;
+        }
+        
+        /* Projects Section */
+        .project-box {
+            background: rgba(18, 247, 255, 0.05);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border-left: 3px solid #12f7ff;
+        }
+        
+        .project-title {
+            font-size: 22px;
+            color: #12f7ff;
+            margin-bottom: 15px;
+        }
+        
+        .project-box p {
+            color: #aaa;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #12f7ff;
+            text-decoration: none;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: rgba(18, 247, 255, 0.1);
+            border-radius: 5px;
+            transition: background 0.3s ease;
+        }
+        
+        .project-link:hover {
+            background: rgba(18, 247, 255, 0.2);
+        }
+        
+        /* Contact Section */
         .contact-content {
             max-width: 800px;
             margin: 0 auto;
+            text-align: center;
         }
         
         .contact-info {
@@ -524,13 +763,14 @@
         
         .contact-item {
             background: rgba(18, 247, 255, 0.05);
-            padding: 20px;
+            padding: 25px;
             border-radius: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             transition: transform 0.3s ease;
             text-decoration: none;
+            border: 1px solid rgba(18, 247, 255, 0.1);
         }
         
         .contact-item:hover {
@@ -548,7 +788,6 @@
             color: #fff;
             text-decoration: none;
             font-size: 16px;
-            transition: color 0.3s ease;
         }
         
         .contact-message {
@@ -561,59 +800,88 @@
             margin-right: auto;
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 992px) {
-            .skills-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1f242d 0%, #2a2f3a 100%);
+            border-top: 1px solid rgba(18, 247, 255, 0.2);
+            padding: 30px 0;
+            text-align: center;
         }
         
-        @media (max-width: 576px) {
-            .skills-grid {
+        footer p {
+            color: #aaa;
+            margin-bottom: 20px;
+        }
+        
+        footer a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(18, 247, 255, 0.1);
+            border-radius: 50%;
+            color: #12f7ff;
+            font-size: 20px;
+            line-height: 40px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        footer a:hover {
+            background: #12f7ff;
+            color: #1f242d;
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .home-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .change-text h3 {
+                font-size: 1.5rem;
+            }
+            
+            .main-text h2 {
+                font-size: 2rem;
+            }
+            
+            .education-content,
+            .portfolio-gallery {
                 grid-template-columns: 1fr;
-            }
-            
-            .experience-header {
-                flex-direction: column;
-            }
-            
-            .highlight-title {
-                min-height: auto;
             }
             
             .contact-info {
                 grid-template-columns: 1fr;
             }
             
-            .education-content {
-                grid-template-columns: 1fr;
+            .img-box {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .img-about img {
+                width: 300px;
+                height: 300px;
             }
         }
         
-        /* Bar graph colors */
-        .bar span {
-            background: linear-gradient(90deg, #12f7ff, #1e9bff);
-            height: 5px;
-            display: block;
-            border-radius: 3px;
+        /* Animation Classes */
+        .scroll-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
         }
         
-        .bar {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
+        .scroll-bottom {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
         }
         
-        /* Animation keyframes */
-        @keyframes slideRight {
-            0% {
-                transform: translateX(-100px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .show-items {
+            opacity: 1;
+            transform: translateX(0) scale(1);
         }
     </style>
 </head>
@@ -621,19 +889,22 @@
     <div id="successMessage" class="success-message"></div>
 
     <script>
-      // Get the URL parameters
-      const urlParams = new URLSearchParams(window.location.search);
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
 
-      // Check if success parameter exists and display the success message
-      if (urlParams.get('success')) {
-        const successMessage = document.getElementById('successMessage');
-        successMessage.textContent = 'Successfully Send!';
-      }
+        // Check if success parameter exists and display the success message
+        if (urlParams.get('success')) {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = 'Successfully Send!';
+        }
     </script>
-    <!-- header site  -->
+
+    <!-- Header -->
     <header>
         <div class="logo"><span>T</span>adese.</div>
-        <ul class="navlist">
+        
+        <!-- Desktop Navigation -->
+        <ul class="desktop-nav">
             <li><a href="#home" style="--i:1;">Home</a></li>
             <li><a href="#about" style="--i:2;">About</a></li>
             <li><a href="#education" style="--i:3;">Education</a></li>
@@ -643,25 +914,43 @@
             <li><a href="#projects" style="--i:7;">Projects</a></li>
             <li><a href="#contact" style="--i:8;">Contact</a></li>
         </ul>
-        <div id="menu-icon" class="bx bx-menu"></div>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="bx bx-menu"></button>
     </header>
 
-    <!-- home section -------------------------------------------------------->
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileOverlay"></div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav" id="mobileNav">
+        <button class="close-menu bx bx-x" id="closeMenu"></button>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#services">Project Experience</a></li>
+            <li><a href="#skills">Technical Skills</a></li>
+            <li><a href="#technical-highlights">Technical Projects</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Home Section -->
     <section id="home" class="home">
         <div class="home-content scroll-scale">
             <h1>Hi! I'm Tadese Worku</h1>
             <div class="change-text">
                 <h3>And I'm</h3>
                 <h3>
-                    <span class="word">Backend&nbsp;&nbsp;Developer </span>
+                    <span class="word">Backend&nbsp;&nbsp;Developer</span>
                     <span class="word">Frontend&nbsp;Developer</span>
                     <span class="word">FullStack&nbsp;Developer</span>
                 </h3>
             </div>
             
-            <p style="font-size: 18px; line-height: 1.6; margin-bottom: 10px;">
-                Transforming complex problems into elegant technical solutions. Passionate about building scalable systems and API integrations.
-            </p>
+            <p>Transforming complex problems into elegant technical solutions. Passionate about building scalable systems and API integrations.</p>
             
             <!-- Stats Section -->
             <div class="stats-container">
@@ -707,36 +996,24 @@
                 <img src="img/tade.jpg" alt="Tadese Worku">
             </div>
             <div class="liquid-shape">
-                <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" id="blobSvg">
-                <path fill="#12f7ff">
-                    <animate attributeName="d"
-                         dur="20000ms"
-                         repeatCount="indefinite"
-                         values="
-                         M467.5,309.5Q456,369,400,390.5Q344,412,297,449.5Q250,487,208,441.5Q166,396,130,368Q94,340,93.5,295Q93,250,92.5,204.5Q92,159,116.5,110.5Q141,62,195.5,61Q250,60,290.5,85Q331,110,366,136.5Q401,163,440,206.5Q479,250,467.5,309.5Z;
-
-                         M432,304Q437,358,400.5,402.5Q364,447,307,442.5Q250,438,203.5,424Q157,410,103,388Q49,366,37.5,308Q26,250,65,208Q104,166,132.5,130.5Q161,95,205.5,76Q250,57,288,87.5Q326,118,359,143Q392,168,409.5,209Q427,250,432,304Z;
-
-                         M442.5,296.5Q411,343,388,395.5Q365,448,307.5,432Q250,416,202,416Q154,416,118,381.5Q82,347,86,298.5Q90,250,70,192.5Q50,135,110.5,124Q171,113,210.5,86.5Q250,60,309,53Q368,46,411.5,88.5Q455,131,464.5,190.5Q474,250,442.5,296.5Z;
-
-                         M416,299.5Q422,349,398.5,407.5Q375,466,312.5,481.5Q250,497,207,448.5Q164,400,105.5,383.5Q47,367,67,308.5Q87,250,102,211.5Q117,173,121,103.5Q125,34,187.5,49Q250,64,288.5,90.5Q327,117,391,124.5Q455,132,432.5,191Q410,250,416,299.5Z;
-
-                         M438.5,303Q434,356,380.5,370Q327,384,288.5,423.5Q250,463,200,443Q150,423,109,389Q68,355,78.5,302.5Q89,250,104.5,212.5Q120,175,135.5,127Q151,79,200.5,41.5Q250,4,300.5,39.5Q351,75,393,109Q435,143,439,196.5Q443,250,438.5,303Z;
-
-                         M395.5,289.5Q387,329,374.5,386.5Q362,444,306,445Q250,446,190,451.5Q130,457,95,408.5Q60,360,58.5,305Q57,250,59.5,196Q62,142,99.5,98Q137,54,193.5,47.5Q250,41,311,40.5Q372,40,397,95.5Q422,151,413,200.5Q404,250,395.5,289.5Z;
-
-                         M441.5,305.5Q442,361,389,379.5Q336,398,293,407.5Q250,417,210.5,402.5Q171,388,128,366.5Q85,345,44.5,297.5Q4,250,45.5,203Q87,156,119,117Q151,78,200.5,72.5Q250,67,306.5,61Q363,55,374.5,113.5Q386,172,413.5,211Q441,250,441.5,305.5Z;
-
-                         M467.5,309.5Q456,369,400,390.5Q344,412,297,449.5Q250,487,208,441.5Q166,396,130,368Q94,340,93.5,295Q93,250,92.5,204.5Q92,159,116.5,110.5Q141,62,195.5,61Q250,60,290.5,85Q331,110,366,136.5Q401,163,440,206.5Q479,250,467.5,309.5Z;
-                         "
-                    ></animate>
-                </path>
+                <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" width="100%">
+                    <path fill="#12f7ff">
+                        <animate attributeName="d"
+                            dur="20000ms"
+                            repeatCount="indefinite"
+                            values="
+                            M467.5,309.5Q456,369,400,390.5Q344,412,297,449.5Q250,487,208,441.5Q166,396,130,368Q94,340,93.5,295Q93,250,92.5,204.5Q92,159,116.5,110.5Q141,62,195.5,61Q250,60,290.5,85Q331,110,366,136.5Q401,163,440,206.5Q479,250,467.5,309.5Z;
+                            M432,304Q437,358,400.5,402.5Q364,447,307,442.5Q250,438,203.5,424Q157,410,103,388Q49,366,37.5,308Q26,250,65,208Q104,166,132.5,130.5Q161,95,205.5,76Q250,57,288,87.5Q326,118,359,143Q392,168,409.5,209Q427,250,432,304Z;
+                            M467.5,309.5Q456,369,400,390.5Q344,412,297,449.5Q250,487,208,441.5Q166,396,130,368Q94,340,93.5,295Q93,250,92.5,204.5Q92,159,116.5,110.5Q141,62,195.5,61Q250,60,290.5,85Q331,110,366,136.5Q401,163,440,206.5Q479,250,467.5,309.5Z;
+                            ">
+                        </animate>
+                    </path>
                 </svg>
             </div>
         </div>
     </section>
 
-    <!-- about section -------------------------------------------------------->
+    <!-- About Section -->
     <section id="about" class="about">
         <div class="img-about scroll-scale">
             <img src="img/tade.jpg" alt="Tadese Worku">
@@ -746,21 +1023,21 @@
             <span>Let me introduce myself</span>
             <h2>About Me</h2>
             <h3>Full-Stack Software Engineer</h3>
-            <p>I am a full-stack software engineer with over two years of experience designing and delivering scalable, high-performance web and mobile applications. I work across both frontend and backend development, contributing to end-to-end system design, implementation, and optimization.
-
-I specialize in API integrations and middleware solutions, with strong hands-on experience working with secure services and industry-standard protocols. I have hands-on implementation experience with payment and financial integrations such as Chapa, Telebirr IPS, and Fayda National ID systems, following secure and compliance-driven practices.
-
-I have experience building responsive user interfaces, designing modular backend services, and working with distributed systems and databases. I follow clean and maintainable architecture principles to ensure systems remain scalable, reliable, and easy to evolve.
-
-In addition, I bring practical DevOps experience, contributing to automated build, deployment, and delivery pipelines. I am passionate about solving complex problems through clear architecture, secure integrations, and collaborative development, aiming to deliver impactful and reliable software solutions.</p>
+            <p>I am a full-stack software engineer with over two years of experience designing and delivering scalable, high-performance web and mobile applications. I work across both frontend and backend development, contributing to end-to-end system design, implementation, and optimization.</p>
+            
+            <p>I specialize in API integrations and middleware solutions, with strong hands-on experience working with secure services and industry-standard protocols. I have hands-on implementation experience with payment and financial integrations such as Chapa, Telebirr IPS, and Fayda National ID systems, following secure and compliance-driven practices.</p>
+            
+            <p>I have experience building responsive user interfaces, designing modular backend services, and working with distributed systems and databases. I follow clean and maintainable architecture principles to ensure systems remain scalable, reliable, and easy to evolve.</p>
+            
+            <p>In addition, I bring practical DevOps experience, contributing to automated build, deployment, and delivery pipelines. I am passionate about solving complex problems through clear architecture, secure integrations, and collaborative development, aiming to deliver impactful and reliable software solutions.</p>
 
             <div class="btn-box">
-              <!--  <a href="#" class="btn">Read More!</a> -->
+                <!-- <a href="#" class="btn">Read More!</a> -->
             </div>
         </div>
-     </section>
+    </section>
 
-    <!-- Education & Certifications section -------------------------------------------------------->
+    <!-- Education Section -->
     <section id="education" class="education-section">
         <div class="main-text scroll-scale">
             <span>Academic & Professional Development</span>
@@ -793,96 +1070,96 @@ In addition, I bring practical DevOps experience, contributing to automated buil
         </div>
     </section>
 
-<!-- Project Experience section -------------------------------------------------------->
-<section id="services" class="services">
-    <div class="main-text scroll-scale">
-        <span>Real-world applications and solutions</span>
-        <h2>Project Experience</h2>
-    </div>
+    <!-- Project Experience Section -->
+    <section id="services" class="services">
+        <div class="main-text scroll-scale">
+            <span>Real-world applications and solutions</span>
+            <h2>Project Experience</h2>
+        </div>
 
-    <div class="section-services scroll-bottom">
-        <div class="experience-item">
-            <div class="experience-header">
-                <div>
-                    <h3 class="experience-title">Mobile Banking Application</h3>
-                    <div class="experience-date">2024 – 2025</div>
+        <div class="scroll-bottom">
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="experience-title">Mobile Banking Application</h3>
+                        <div class="experience-date">2024 – 2025</div>
+                    </div>
+                    <a href="https://play.google.com/store/apps/details?id=com.gbbmobile&hl=en" class="app-store-link" target="_blank">
+                        <i class='bx bxl-play-store'></i> Google Play Store
+                    </a>
                 </div>
-                <a href="https://play.google.com/store/apps/details?id=com.gbbmobile&hl=en" class="app-store-link" target="_blank">
-                    <i class='bx bxl-play-store'></i> Google Play Store
-                </a>
-            </div>
-            
-            <div class="experience-metrics">
-                <div class="metric">Served 2,000+ active users</div>
-                <div class="metric">99.5% uptime</div>
-            </div>
-            
-            <p>Full-stack development of React Native mobile app with Spring Boot backend. Participated in developing both backend portal and React Native app, implementing clear and efficient code architecture, integrating with core banking APIs and third-party services, using CQRS pattern and Clean Architecture principles.</p>
-            
-            <div class="experience-tech">
-                <span class="tech-tag">React Native</span>
-                <span class="tech-tag">Spring Boot</span>
-                <span class="tech-tag">CQRS</span>
-                <span class="tech-tag">Clean Architecture</span>
-                <span class="tech-tag">Banking APIs</span>
-                <span class="tech-tag">Redux</span>
-                <span class="tech-tag">MongoDB</span>
-            </div>
-        </div>
-        
-        <div class="experience-item">
-            <div class="experience-header">
-                <div>
-                    <h3 class="experience-title">Foreign Currency Allocation System</h3>
-                    <div class="experience-date">2023</div>
+                
+                <div class="experience-metrics">
+                    <div class="metric">Served 2,000+ active users</div>
+                    <div class="metric">99.5% uptime</div>
+                </div>
+                
+                <p>Full-stack development of React Native mobile app with Spring Boot backend. Participated in developing both backend portal and React Native app, implementing clear and efficient code architecture, integrating with core banking APIs and third-party services, using CQRS pattern and Clean Architecture principles.</p>
+                
+                <div class="experience-tech">
+                    <span class="tech-tag">React Native</span>
+                    <span class="tech-tag">Spring Boot</span>
+                    <span class="tech-tag">CQRS</span>
+                    <span class="tech-tag">Clean Architecture</span>
+                    <span class="tech-tag">Banking APIs</span>
+                    <span class="tech-tag">Redux</span>
+                    <span class="tech-tag">MongoDB</span>
                 </div>
             </div>
             
-            <div class="experience-metrics">
-                <div class="metric">Reduced processing time by 35%</div>
-                <div class="metric">Real-time tracking</div>
-            </div>
-            
-            <p>Next.js frontend for financial management system with real-time currency tracking. Developed responsive admin interface using Next.js and Tailwind CSS, integrated with banking APIs for real-time currency data, enhanced user experience with real-time updates and notifications.</p>
-            
-            <div class="experience-tech">
-                <span class="tech-tag">Next.js</span>
-                <span class="tech-tag">Tailwind CSS</span>
-                <span class="tech-tag">REST APIs</span>
-                <span class="tech-tag">Real-time Data</span>
-                <span class="tech-tag">Financial Systems</span>
-            </div>
-        </div>
-        
-        <div class="experience-item">
-            <div class="experience-header">
-                <div>
-                    <h3 class="experience-title">National ID Integration System</h3>
-                    <div class="experience-date">2025</div>
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="experience-title">Foreign Currency Allocation System</h3>
+                        <div class="experience-date">2023</div>
+                    </div>
+                </div>
+                
+                <div class="experience-metrics">
+                    <div class="metric">Reduced processing time by 35%</div>
+                    <div class="metric">Real-time tracking</div>
+                </div>
+                
+                <p>Next.js frontend for financial management system with real-time currency tracking. Developed responsive admin interface using Next.js and Tailwind CSS, integrated with banking APIs for real-time currency data, enhanced user experience with real-time updates and notifications.</p>
+                
+                <div class="experience-tech">
+                    <span class="tech-tag">Next.js</span>
+                    <span class="tech-tag">Tailwind CSS</span>
+                    <span class="tech-tag">REST APIs</span>
+                    <span class="tech-tag">Real-time Data</span>
+                    <span class="tech-tag">Financial Systems</span>
                 </div>
             </div>
             
-            <div class="experience-metrics">
-                <div class="metric">1K+ monthly verifications</div>
-                <div class="metric">99.9% uptime</div>
-                <div class="metric">60% faster verification</div>
-            </div>
-            
-            <p>OIDC-based authentication system integrating with EthSwitch for KYC verification. Implemented OAuth2/OIDC flow for secure authentication, integrated with national ID system via EthSwitch APIs, reduced customer verification time by 60%, handled 1,000+ monthly verifications.</p>
-            
-            <div class="experience-tech">
-                <span class="tech-tag">OAuth2/OIDC</span>
-                <span class="tech-tag">EthSwitch APIs</span>
-                <span class="tech-tag">KYC Verification</span>
-                <span class="tech-tag">Authentication</span>
-                <span class="tech-tag">Security</span>
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3 class="experience-title">National ID Integration System</h3>
+                        <div class="experience-date">2025</div>
+                    </div>
+                </div>
+                
+                <div class="experience-metrics">
+                    <div class="metric">1K+ monthly verifications</div>
+                    <div class="metric">99.9% uptime</div>
+                    <div class="metric">60% faster verification</div>
+                </div>
+                
+                <p>OIDC-based authentication system integrating with EthSwitch for KYC verification. Implemented OAuth2/OIDC flow for secure authentication, integrated with national ID system via EthSwitch APIs, reduced customer verification time by 60%, handled 1,000+ monthly verifications.</p>
+                
+                <div class="experience-tech">
+                    <span class="tech-tag">OAuth2/OIDC</span>
+                    <span class="tech-tag">EthSwitch APIs</span>
+                    <span class="tech-tag">KYC Verification</span>
+                    <span class="tech-tag">Authentication</span>
+                    <span class="tech-tag">Security</span>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-      <!-- Technical Skills section -------------------------------------------------------->
-      <section id="skills" class="skills">
+    <!-- Technical Skills Section -->
+    <section id="skills" class="skills">
         <div class="main-text scroll-scale">
             <span>What I know and am good at</span>
             <h2>Technical Skills</h2>
@@ -1124,89 +1401,87 @@ In addition, I bring practical DevOps experience, contributing to automated buil
                 </div>
             </div>
         </div>
-      </section>
+    </section>
 
-      <!-- Technical Highlights section -------------------------------------------------------->
-      <section id="technical-highlights" class="portfolio">
+    <!-- Technical Highlights Section -->
+    <section id="technical-highlights" class="portfolio">
         <div class="main-text scroll-scale">
             <span>Technical Projects - Application of Skills</span>
             <h2>Technical Highlights</h2>          
         </div>
 
-        <div class="container">
-            <div class="portfolio-gallery scroll-bottom">
-                <div class="port-box">
-                    <div class="highlight-box">
-                        <h3 class="highlight-title">T24 Banking Customization</h3>
-                        <p>Customized Temenos T24 core banking modules to support business and operational requirements. Improved system functionality and alignment with banking processes.</p>
-                        <div class="highlight-tech">
-                            <span class="highlight-tag">Temenos T24</span>
-                            <span class="highlight-tag">Java</span>
-                            <span class="highlight-tag">IRIS</span>
-                            <span class="highlight-tag">Core Banking APIs</span>
-                        </div>
+        <div class="portfolio-gallery scroll-bottom">
+            <div class="port-box">
+                <div class="highlight-box">
+                    <h3 class="highlight-title">T24 Banking Customization</h3>
+                    <p>Customized Temenos T24 core banking modules to support business and operational requirements. Improved system functionality and alignment with banking processes.</p>
+                    <div class="highlight-tech">
+                        <span class="highlight-tag">Temenos T24</span>
+                        <span class="highlight-tag">Java</span>
+                        <span class="highlight-tag">IRIS</span>
+                        <span class="highlight-tag">Core Banking APIs</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="port-box">
-                    <div class="highlight-box">
-                        <h3 class="highlight-title">API Integration Hub</h3>
-                        <p>Integrated banking and enterprise systems with third-party services through a centralized API layer. Streamlined and secured data flow between financial systems.</p>
-                        <div class="highlight-tech">
-                            <span class="highlight-tag">WSO2 API Manager</span>
-                            <span class="highlight-tag">WSO2 Micro Integrator</span>
-                            <span class="highlight-tag">REST/SOAP</span>
-                            <span class="highlight-tag">XML/JSON</span>
-                            <span class="highlight-tag">OAuth</span>
-                        </div>
+            <div class="port-box">
+                <div class="highlight-box">
+                    <h3 class="highlight-title">API Integration Hub</h3>
+                    <p>Integrated banking and enterprise systems with third-party services through a centralized API layer. Streamlined and secured data flow between financial systems.</p>
+                    <div class="highlight-tech">
+                        <span class="highlight-tag">WSO2 API Manager</span>
+                        <span class="highlight-tag">WSO2 Micro Integrator</span>
+                        <span class="highlight-tag">REST/SOAP</span>
+                        <span class="highlight-tag">XML/JSON</span>
+                        <span class="highlight-tag">OAuth</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="port-box">
-                    <div class="highlight-box">
-                        <h3 class="highlight-title">Microservices Architecture</h3>
-                        <p>Designed and developed backend services using a microservices-based architecture. Enhanced scalability, maintainability, and deployment flexibility.</p>
-                        <div class="highlight-tech">
-                            <span class="highlight-tag">Spring Boot</span>
-                            <span class="highlight-tag">Docker</span>
-                            <span class="highlight-tag">PostgreSQL</span>
-                            <span class="highlight-tag">Microservices</span>
-                            <span class="highlight-tag">ASP.NET</span>
-                            <span class="highlight-tag">NestJS</span>
-                            <span class="highlight-tag">Clean Architecture</span>
-                        </div>
+            <div class="port-box">
+                <div class="highlight-box">
+                    <h3 class="highlight-title">Microservices Architecture</h3>
+                    <p>Designed and developed backend services using a microservices-based architecture. Enhanced scalability, maintainability, and deployment flexibility.</p>
+                    <div class="highlight-tech">
+                        <span class="highlight-tag">Spring Boot</span>
+                        <span class="highlight-tag">Docker</span>
+                        <span class="highlight-tag">PostgreSQL</span>
+                        <span class="highlight-tag">Microservices</span>
+                        <span class="highlight-tag">ASP.NET</span>
+                        <span class="highlight-tag">NestJS</span>
+                        <span class="highlight-tag">Clean Architecture</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="port-box">
-                    <div class="highlight-box">
-                        <h3 class="highlight-title">Mobile Banking Solutions</h3>
-                        <p>Developed cross-platform mobile applications to support customer banking experiences. Delivered responsive and reliable mobile banking features with robust backend integration.</p>
-                        <div class="highlight-tech">
-                            <span class="highlight-tag">React Native</span>
-                            <span class="highlight-tag">Redux</span>
-                            <span class="highlight-tag">MongoDB</span>
-                            <span class="highlight-tag">Firebase</span>
-                            <span class="highlight-tag">Financial APIs</span>
-                            <span class="highlight-tag">Spring Boot</span>
-                            <span class="highlight-tag">CQRS Pattern</span>
-                            <span class="highlight-tag">Clean Architecture</span>
-                            <span class="highlight-tag">Core Banking APIs</span>
-                        </div>
+            <div class="port-box">
+                <div class="highlight-box">
+                    <h3 class="highlight-title">Mobile Banking Solutions</h3>
+                    <p>Developed cross-platform mobile applications to support customer banking experiences. Delivered responsive and reliable mobile banking features with robust backend integration.</p>
+                    <div class="highlight-tech">
+                        <span class="highlight-tag">React Native</span>
+                        <span class="highlight-tag">Redux</span>
+                        <span class="highlight-tag">MongoDB</span>
+                        <span class="highlight-tag">Firebase</span>
+                        <span class="highlight-tag">Financial APIs</span>
+                        <span class="highlight-tag">Spring Boot</span>
+                        <span class="highlight-tag">CQRS Pattern</span>
+                        <span class="highlight-tag">Clean Architecture</span>
+                        <span class="highlight-tag">Core Banking APIs</span>
                     </div>
                 </div>
             </div>
         </div>
-      </section>
+    </section>
 
-      <!-- Projects Section (GitHub Projects) -->
-      <section id="projects" class="projects-section">
+    <!-- Projects Section -->
+    <section id="projects" class="projects-section">
         <div class="main-text scroll-scale">
             <span>GitHub Projects - Source Code & Implementation</span>
             <h2>Open Source Projects</h2>
         </div>
 
-        <div class="section-services scroll-bottom">
+        <div class="scroll-bottom">
             <div class="project-box">
                 <h3 class="project-title">Nest Department API</h3>
                 <p>This is CRUD operations on a self-referencing Department table using NX workspace, CQRS pattern, and clean architecture (DDD), which follows the principles of Domain Driven Design (DDD).</p>
@@ -1239,9 +1514,9 @@ In addition, I bring practical DevOps experience, contributing to automated buil
                 </a>
             </div>
         </div>
-      </section>
+    </section>
 
-    <!-- Get In Touch section -------------------------------------------------------->
+    <!-- Contact Section -->
     <section id="contact" class="contact-section">
         <div class="main-text scroll-scale">
             <span>Let's Connect</span>
@@ -1279,56 +1554,61 @@ In addition, I bring practical DevOps experience, contributing to automated buil
         </div>
     </section>
 
-    <!-- footer website -->
+    <!-- Footer -->
     <footer>
-        <p class="scroll-scale">Copyright &copy; 2025 by Tadese Worku || All Right  Reservd.</p>
+        <p class="scroll-scale">Copyright &copy; 2025 by Tadese Worku || All Right Reserved.</p>
         <a href="#home"><i class='bx bx-up-arrow-alt'></i></a>
-    </footer> 
-      
+    </footer>
 
-    <script src="mixitup.min.js"></script>
-    <script src="script.js"></script>
-    
     <script>
-        // Mobile menu functionality
-        const menuIcon = document.getElementById('menu-icon');
-        const navList = document.querySelector('.navlist');
+        // Mobile Menu Functionality
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('closeMenu');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileOverlay = document.getElementById('mobileOverlay');
+        const mobileLinks = mobileNav.querySelectorAll('a');
         
-        menuIcon.addEventListener('click', function() {
-            // Toggle the active class
-            navList.classList.toggle('active');
-            
-            // Toggle menu icon between hamburger and X
-            if (menuIcon.classList.contains('bx-menu')) {
-                menuIcon.classList.remove('bx-menu');
-                menuIcon.classList.add('bx-x');
-            } else {
-                menuIcon.classList.remove('bx-x');
-                menuIcon.classList.add('bx-menu');
+        // Open Mobile Menu
+        function openMobileMenu() {
+            mobileNav.classList.add('active');
+            mobileOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        // Close Mobile Menu
+        function closeMobileMenu() {
+            mobileNav.classList.remove('active');
+            mobileOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Toggle Mobile Menu
+        mobileMenuBtn.addEventListener('click', openMobileMenu);
+        closeMenuBtn.addEventListener('click', closeMobileMenu);
+        mobileOverlay.addEventListener('click', closeMobileMenu);
+        
+        // Close menu when clicking on a link
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+        
+        // Close menu on window resize (if resizing to desktop)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
             }
         });
         
-        // Close menu when clicking on a link
-        const navLinks = document.querySelectorAll('.navlist a');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth <= 768) {
-                    navList.classList.remove('active');
-                    menuIcon.classList.remove('bx-x');
-                    menuIcon.classList.add('bx-menu');
-                }
-            });
-        });
-        
-        // Smooth scrolling for anchor links
+        // Smooth Scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
                 const targetId = this.getAttribute('href');
-                if(targetId === '#') return;
+                if (targetId === '#') return;
                 
                 const targetElement = document.querySelector(targetId);
-                if(targetElement) {
-                    e.preventDefault();
+                if (targetElement) {
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
@@ -1337,24 +1617,48 @@ In addition, I bring practical DevOps experience, contributing to automated buil
             });
         });
         
-        // Handle window resize
-        window.addEventListener('resize', function() {
-            if (window.innerWidth > 768) {
-                // On desktop: ensure menu is visible
-                navList.classList.remove('active');
-                menuIcon.classList.remove('bx-x');
-                menuIcon.classList.add('bx-menu');
-            }
+        // Scroll Animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show-items');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all animated elements
+        document.querySelectorAll('.scroll-scale, .scroll-bottom').forEach(el => {
+            observer.observe(el);
         });
         
-        // Initialize - ensure navlist is properly set on load
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.innerWidth <= 768) {
-                navList.classList.remove('active');
-                menuIcon.classList.add('bx-menu');
-            }
+        // Set active navigation link based on scroll position
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.desktop-nav a, .mobile-nav a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
         });
     </script>
-
 </body>
 </html>
