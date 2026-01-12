@@ -45,7 +45,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: padding 0.3s ease;
         }
         
         .logo {
@@ -86,43 +85,12 @@
             color: #12f7ff;
         }
         
-        /* Add active state for nav links */
-        .navlist li a.active {
-            color: #12f7ff !important;
-            font-weight: 600;
-        }
-        
-        .navlist li a.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: #12f7ff;
-            border-radius: 2px;
-        }
-        
         #menu-icon {
             font-size: 35px;
-            color: #12f7ff; /* Changed to make it more visible */
+            color: #fff;
             display: none;
             cursor: pointer;
             z-index: 1001;
-            transition: transform 0.3s ease, color 0.3s ease;
-            padding: 5px;
-            background: rgba(18, 247, 255, 0.1);
-            border-radius: 5px;
-        }
-        
-        #menu-icon:hover {
-            color: #fff;
-            background: rgba(18, 247, 255, 0.2);
-        }
-        
-        #menu-icon.bx-x {
-            transform: rotate(180deg);
-            color: #ff1257; /* Different color for close icon */
         }
         
         footer {
@@ -144,23 +112,24 @@
             
             .navlist {
                 position: fixed;
-                top: 70px;
-                right: -100%;
+                top: 0;
+                left: -100%;
                 width: 250px;
-                height: calc(100vh - 70px);
+                height: 100vh;
                 background: linear-gradient(135deg, #1f242d 0%, #2a2f3a 100%);
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding: 40px 20px;
-                transition: right 0.3s ease;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
-                z-index: 999;
+                padding: 100px 20px 40px;
+                transition: left 0.3s ease;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+                z-index: 1000;
                 margin: 0;
+                overflow-y: auto;
             }
             
             .navlist.active {
-                right: 0;
+                left: 0;
             }
             
             .navlist li {
@@ -186,9 +155,9 @@
                 display: none !important;
             }
             
-            /* KEEP about section image on mobile */
+            /* HIDE about section image on mobile */
             .img-about {
-                display: block !important;
+                display: none !important;
             }
             
             /* Make about content full width on mobile */
@@ -208,6 +177,22 @@
             
             .stat-box {
                 min-width: 100px;
+            }
+            
+            /* Add overlay for mobile menu */
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+                display: none;
+            }
+            
+            .overlay.active {
+                display: block;
             }
         }
         
@@ -677,8 +662,11 @@
             <li><a href="#projects" style="--i:7;">Projects</a></li>
             <li><a href="#contact" style="--i:8;">Contact</a></li>
         </ul>
-        <div id="menu-icon" class="bx bx-menu"></div>
+        <div id="menu-icon" class="bx bx-menu"></div> <!-- Start with hamburger icon -->
     </header>
+
+    <!-- Overlay for mobile menu -->
+    <div class="overlay"></div>
 
     <!-- home section -------------------------------------------------------->
     <section id="home" class="home">
@@ -1324,87 +1312,93 @@ In addition, I bring practical DevOps experience, contributing to automated buil
     <script src="script.js"></script>
     
     <script>
-        // Mobile menu toggle with correct icon behavior
+        // Mobile menu toggle with corrected behavior
         const menuIcon = document.getElementById('menu-icon');
         const navList = document.querySelector('.navlist');
-        const navLinks = document.querySelectorAll('.navlist a');
-        let isMenuOpen = false;
+        const overlay = document.querySelector('.overlay');
+        let isMenuOpen = false; // Start with menu closed on mobile
         
-        // Initialize menu as closed by default
+        // Initialize menu state
         function initMenu() {
-            navList.classList.remove('active');
-            menuIcon.classList.remove('bx-x');
-            menuIcon.classList.add('bx-menu');
-            isMenuOpen = false;
-        }
-        
-        // Function to open the menu
-        function openMenu() {
-            navList.classList.add('active');
-            menuIcon.classList.remove('bx-menu');
-            menuIcon.classList.add('bx-x');
-            isMenuOpen = true;
-        }
-        
-        // Function to close the menu
-        function closeMenu() {
-            navList.classList.remove('active');
-            menuIcon.classList.remove('bx-x');
-            menuIcon.classList.add('bx-menu');
-            isMenuOpen = false;
-        }
-        
-        // Toggle menu
-        menuIcon.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (isMenuOpen) {
-                closeMenu();
+            if (window.innerWidth <= 768) {
+                // On mobile: CLOSED by default with hamburger icon
+                navList.classList.remove('active');
+                overlay.classList.remove('active');
+                menuIcon.classList.remove('bx-x');
+                menuIcon.classList.add('bx-menu'); // Show hamburger
+                isMenuOpen = false;
+                document.body.style.overflow = ''; // Allow scrolling
             } else {
-                openMenu();
+                // On desktop: CLOSED by default
+                navList.classList.remove('active');
+                overlay.classList.remove('active');
+                menuIcon.classList.remove('bx-x');
+                menuIcon.classList.add('bx-menu');
+                isMenuOpen = false;
+                document.body.style.overflow = ''; // Allow scrolling
+            }
+        }
+        
+        // Toggle menu function
+        function toggleMenu() {
+            if (isMenuOpen) {
+                // Close menu (show hamburger)
+                navList.classList.remove('active');
+                overlay.classList.remove('active');
+                menuIcon.classList.remove('bx-x');
+                menuIcon.classList.add('bx-menu'); // Show hamburger
+                document.body.style.overflow = ''; // Allow scrolling
+            } else {
+                // Open menu (show X)
+                navList.classList.add('active');
+                overlay.classList.add('active');
+                menuIcon.classList.remove('bx-menu');
+                menuIcon.classList.add('bx-x'); // Show X
+                document.body.style.overflow = 'hidden'; // Prevent scrolling
+            }
+            isMenuOpen = !isMenuOpen;
+        }
+        
+        // Menu icon click - only way to toggle menu
+        menuIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMenu();
+        });
+        
+        // Overlay click - do nothing (menu stays open if it's open)
+        overlay.addEventListener('click', function(e) {
+            e.stopPropagation();
+            // Do nothing - menu stays open if it's open
+        });
+        
+        // Clicking outside on mobile - do nothing (menu stays open if it's open)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && isMenuOpen) {
+                // Do nothing - menu stays open regardless of outside clicks
+                // Only menu icon click can close it
             }
         });
         
-        // Close menu when clicking on a link (for mobile)
+        // Scroll on mobile - do nothing (menu stays open if it's open)
+        window.addEventListener('scroll', function() {
+            if (window.innerWidth <= 768 && isMenuOpen) {
+                // Do nothing - menu stays open during scroll
+            }
+        });
+        
+        // Clicking nav links - close menu if open
+        const navLinks = document.querySelectorAll('.navlist a');
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    closeMenu();
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768 && isMenuOpen) {
+                    toggleMenu(); // Close menu when clicking a link
                 }
             });
         });
         
-        // Close menu when clicking outside (for mobile)
-        document.addEventListener('click', (e) => {
-            if (isMenuOpen && window.innerWidth <= 768 && 
-                !navList.contains(e.target) && e.target !== menuIcon) {
-                closeMenu();
-            }
-        });
-        
-        // Close menu when scrolling (for mobile)
-        window.addEventListener('scroll', () => {
-            if (window.innerWidth <= 768 && isMenuOpen) {
-                closeMenu();
-            }
-        });
-        
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                // On larger screens, ensure menu is visible and icon is hamburger
-                navList.classList.remove('active');
-                menuIcon.classList.remove('bx-x');
-                menuIcon.classList.add('bx-menu');
-                isMenuOpen = false;
-            } else {
-                // On mobile, ensure menu is closed
-                initMenu();
-            }
-        });
-        
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+            anchor.addEventListener('click', function(e) {
                 const targetId = this.getAttribute('href');
                 if(targetId === '#') return;
                 
@@ -1419,19 +1413,41 @@ In addition, I bring practical DevOps experience, contributing to automated buil
             });
         });
         
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                // On desktop: ensure proper state
+                navList.classList.remove('active');
+                overlay.classList.remove('active');
+                menuIcon.classList.remove('bx-x');
+                menuIcon.classList.add('bx-menu');
+                isMenuOpen = false;
+                document.body.style.overflow = ''; // Allow scrolling
+            } else {
+                // On mobile: maintain current state but ensure proper icon
+                if (isMenuOpen) {
+                    menuIcon.classList.remove('bx-menu');
+                    menuIcon.classList.add('bx-x');
+                } else {
+                    menuIcon.classList.remove('bx-x');
+                    menuIcon.classList.add('bx-menu');
+                }
+            }
+        });
+        
         // Initialize menu on page load
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', function() {
             initMenu();
             
             // Highlight active nav link based on scroll position
             const sections = document.querySelectorAll('section[id]');
             
-            window.addEventListener('scroll', () => {
+            window.addEventListener('scroll', function() {
                 let current = '';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop - 100;
                     const sectionHeight = section.clientHeight;
-                    if(scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    if(window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
                         current = section.getAttribute('id');
                     }
                 });
@@ -1446,10 +1462,8 @@ In addition, I bring practical DevOps experience, contributing to automated buil
         });
 
         // Ensure proper menu state on page refresh
-        window.addEventListener('load', () => {
-            if (window.innerWidth <= 768) {
-                initMenu();
-            }
+        window.addEventListener('load', function() {
+            initMenu();
         });
     </script>
 
