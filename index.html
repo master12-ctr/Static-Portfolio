@@ -113,7 +113,7 @@
             .navlist {
                 position: fixed;
                 top: 0;
-                right: -100%;
+                left: -100%;
                 width: 250px;
                 height: 100vh;
                 background: linear-gradient(135deg, #1f242d 0%, #2a2f3a 100%);
@@ -121,14 +121,15 @@
                 flex-direction: column;
                 align-items: center;
                 padding: 100px 20px 40px;
-                transition: right 0.3s ease;
-                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+                transition: left 0.3s ease;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
                 z-index: 1000;
                 margin: 0;
+                overflow-y: auto;
             }
             
             .navlist.active {
-                right: 0;
+                left: 0;
             }
             
             .navlist li {
@@ -154,7 +155,7 @@
                 display: none !important;
             }
             
-            /* Hide about section image on mobile */
+            /* HIDE about section image on mobile */
             .img-about {
                 display: none !important;
             }
@@ -176,6 +177,22 @@
             
             .stat-box {
                 min-width: 100px;
+            }
+            
+            /* Add overlay for mobile menu */
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+                display: none;
+            }
+            
+            .overlay.active {
+                display: block;
             }
         }
         
@@ -647,6 +664,9 @@
         </ul>
         <div id="menu-icon" class="bx bx-menu"></div>
     </header>
+
+    <!-- Overlay for mobile menu -->
+    <div class="overlay"></div>
 
     <!-- home section -------------------------------------------------------->
     <section id="home" class="home">
@@ -1295,18 +1315,29 @@ In addition, I bring practical DevOps experience, contributing to automated buil
         // Mobile menu functionality
         const menuIcon = document.getElementById('menu-icon');
         const navList = document.querySelector('.navlist');
+        const overlay = document.querySelector('.overlay');
         let menuOpen = false;
         
         // Toggle menu
         function toggleMenu() {
             menuOpen = !menuOpen;
             navList.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Prevent body scrolling when menu is open
+            if (menuOpen) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
         }
         
         // Close menu
         function closeMenu() {
             menuOpen = false;
             navList.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
         }
         
         // Menu icon click
@@ -1315,26 +1346,35 @@ In addition, I bring practical DevOps experience, contributing to automated buil
             toggleMenu();
         });
         
-        // Close menu when clicking outside
+        // Close menu when clicking overlay
+        overlay.addEventListener('click', function() {
+            closeMenu();
+        });
+        
+        // Close menu when clicking outside (for mobile only)
         document.addEventListener('click', function(e) {
-            if (menuOpen && !navList.contains(e.target) && e.target !== menuIcon) {
-                closeMenu();
+            if (window.innerWidth <= 768 && menuOpen) {
+                if (!navList.contains(e.target) && e.target !== menuIcon) {
+                    closeMenu();
+                }
             }
         });
         
-        // Close menu when scrolling
-        let scrollTimeout;
+        // Close menu when scrolling (for mobile only)
         window.addEventListener('scroll', function() {
-            if (menuOpen) {
-                clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(closeMenu, 100);
+            if (window.innerWidth <= 768 && menuOpen) {
+                closeMenu();
             }
         });
         
         // Close menu when clicking a link
         const navLinks = document.querySelectorAll('.navlist a');
         navLinks.forEach(link => {
-            link.addEventListener('click', closeMenu);
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    closeMenu();
+                }
+            });
         });
         
         // Smooth scrolling for anchor links
@@ -1353,6 +1393,13 @@ In addition, I bring practical DevOps experience, contributing to automated buil
                     });
                 }
             });
+        });
+        
+        // Handle window resize - close menu if resizing to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768 && menuOpen) {
+                closeMenu();
+            }
         });
     </script>
 
