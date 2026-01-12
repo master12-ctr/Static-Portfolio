@@ -91,6 +91,11 @@
             display: none;
             cursor: pointer;
             z-index: 1001;
+            transition: transform 0.3s ease;
+        }
+        
+        #menu-icon.bx-x {
+            transform: rotate(90deg);
         }
         
         footer {
@@ -1292,34 +1297,70 @@ In addition, I bring practical DevOps experience, contributing to automated buil
     <script src="script.js"></script>
     
     <script>
-        // Mobile menu toggle - simple version from working code
+        // Mobile menu toggle with correct icon behavior
         const menuIcon = document.getElementById('menu-icon');
         const navList = document.querySelector('.navlist');
+        const navLinks = document.querySelectorAll('.navlist a');
         let isMenuOpen = false;
+        
+        // Function to open the menu
+        function openMenu() {
+            navList.classList.add('active');
+            menuIcon.classList.remove('bx-menu');
+            menuIcon.classList.add('bx-x');
+            isMenuOpen = true;
+        }
+        
+        // Function to close the menu
+        function closeMenu() {
+            navList.classList.remove('active');
+            menuIcon.classList.remove('bx-x');
+            menuIcon.classList.add('bx-menu');
+            isMenuOpen = false;
+        }
         
         // Toggle menu
         menuIcon.addEventListener('click', (e) => {
             e.stopPropagation();
-            isMenuOpen = !isMenuOpen;
-            navList.classList.toggle('active');
+            if (isMenuOpen) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
         });
         
         // Close menu when clicking on a link
-        const navLinks = document.querySelectorAll('.navlist a');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                isMenuOpen = false;
-                navList.classList.remove('active');
+                closeMenu();
             });
         });
         
-        // Close menu when clicking outside (only on mobile)
+        // Close menu when clicking outside (for all screen sizes)
         document.addEventListener('click', (e) => {
-            if (window.innerWidth <= 768) {
-                if (isMenuOpen && !navList.contains(e.target) && e.target !== menuIcon) {
-                    isMenuOpen = false;
-                    navList.classList.remove('active');
-                }
+            if (isMenuOpen && !navList.contains(e.target) && e.target !== menuIcon) {
+                closeMenu();
+            }
+        });
+        
+        // Close menu when scrolling (for mobile)
+        let scrollTimer;
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth <= 768 && isMenuOpen) {
+                // Clear any existing timer
+                clearTimeout(scrollTimer);
+                
+                // Set a timer to close menu after scrolling stops
+                scrollTimer = setTimeout(() => {
+                    closeMenu();
+                }, 150);
+            }
+        });
+        
+        // Close menu on window resize (optional, for UX)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && isMenuOpen) {
+                closeMenu();
             }
         });
         
@@ -1339,6 +1380,11 @@ In addition, I bring practical DevOps experience, contributing to automated buil
                     });
                 }
             });
+        });
+        
+        // Ensure menu starts closed on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            closeMenu();
         });
     </script>
 
