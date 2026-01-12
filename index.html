@@ -116,7 +116,7 @@
                 left: -100%;
                 width: 100%;
                 height: 100vh;
-                background: rgba(31, 36, 45, 0.95);
+                background: rgba(31, 36, 45, 0.98);
                 backdrop-filter: blur(10px);
                 display: flex;
                 flex-direction: column;
@@ -126,10 +126,14 @@
                 transition: left 0.3s ease;
                 z-index: 9999;
                 margin: 0;
+                visibility: hidden;
+                opacity: 0;
             }
             
             .navlist.active {
                 left: 0;
+                visibility: visible;
+                opacity: 1;
             }
             
             .navlist li {
@@ -1286,12 +1290,14 @@ In addition, I bring practical DevOps experience, contributing to automated buil
     <script src="script.js"></script>
     
     <script>
-        // Simple mobile menu toggle
+        // Mobile menu functionality
         const menuIcon = document.getElementById('menu-icon');
         const navList = document.querySelector('.navlist');
         
         menuIcon.addEventListener('click', function() {
+            // Toggle the active class
             navList.classList.toggle('active');
+            
             // Toggle menu icon between hamburger and X
             if (menuIcon.classList.contains('bx-menu')) {
                 menuIcon.classList.remove('bx-menu');
@@ -1337,6 +1343,14 @@ In addition, I bring practical DevOps experience, contributing to automated buil
                 // On desktop: ensure menu is visible
                 navList.classList.remove('active');
                 menuIcon.classList.remove('bx-x');
+                menuIcon.classList.add('bx-menu');
+            }
+        });
+        
+        // Initialize - ensure navlist is properly set on load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth <= 768) {
+                navList.classList.remove('active');
                 menuIcon.classList.add('bx-menu');
             }
         });
