@@ -90,6 +90,7 @@
             color: #fff;
             display: none;
             cursor: pointer;
+            z-index: 1001;
         }
         
         footer {
@@ -106,22 +107,24 @@
             
             #menu-icon {
                 display: block;
+                position: relative;
             }
             
             .navlist {
                 position: fixed;
-                top: 70px;
+                top: 0;
                 right: -100%;
                 width: 250px;
-                height: calc(100vh - 70px);
+                height: 100vh;
                 background: linear-gradient(135deg, #1f242d 0%, #2a2f3a 100%);
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                padding: 40px 20px;
+                padding: 100px 20px 40px;
                 transition: right 0.3s ease;
                 box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
-                z-index: 999;
+                z-index: 1000;
+                margin: 0;
             }
             
             .navlist.active {
@@ -138,13 +141,10 @@
                 display: block;
                 width: 100%;
                 padding: 10px;
+                font-size: 18px;
             }
             
             /* Hide the second SVG completely on mobile */
-            .home-image {
-                position: relative;
-            }
-            
             .home-image .liquid-shape:last-child {
                 display: none !important;
             }
@@ -152,6 +152,17 @@
             /* Ensure only one photo shows */
             .home-image svg:nth-of-type(2) {
                 display: none !important;
+            }
+            
+            /* Hide about section image on mobile */
+            .img-about {
+                display: none !important;
+            }
+            
+            /* Make about content full width on mobile */
+            .about-content {
+                width: 100% !important;
+                padding: 0 !important;
             }
             
             .home-content {
@@ -1281,20 +1292,49 @@ In addition, I bring practical DevOps experience, contributing to automated buil
     <script src="script.js"></script>
     
     <script>
-        // Mobile menu toggle
+        // Mobile menu functionality
         const menuIcon = document.getElementById('menu-icon');
         const navList = document.querySelector('.navlist');
+        let menuOpen = false;
         
-        menuIcon.addEventListener('click', () => {
+        // Toggle menu
+        function toggleMenu() {
+            menuOpen = !menuOpen;
             navList.classList.toggle('active');
+        }
+        
+        // Close menu
+        function closeMenu() {
+            menuOpen = false;
+            navList.classList.remove('active');
+        }
+        
+        // Menu icon click
+        menuIcon.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleMenu();
         });
         
-        // Close menu when clicking on a link
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (menuOpen && !navList.contains(e.target) && e.target !== menuIcon) {
+                closeMenu();
+            }
+        });
+        
+        // Close menu when scrolling
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            if (menuOpen) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(closeMenu, 100);
+            }
+        });
+        
+        // Close menu when clicking a link
         const navLinks = document.querySelectorAll('.navlist a');
         navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navList.classList.remove('active');
-            });
+            link.addEventListener('click', closeMenu);
         });
         
         // Smooth scrolling for anchor links
