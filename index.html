@@ -45,6 +45,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: padding 0.3s ease;
         }
         
         .logo {
@@ -85,17 +86,43 @@
             color: #12f7ff;
         }
         
+        /* Add active state for nav links */
+        .navlist li a.active {
+            color: #12f7ff !important;
+            font-weight: 600;
+        }
+        
+        .navlist li a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #12f7ff;
+            border-radius: 2px;
+        }
+        
         #menu-icon {
             font-size: 35px;
-            color: #fff;
+            color: #12f7ff; /* Changed to make it more visible */
             display: none;
             cursor: pointer;
             z-index: 1001;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, color 0.3s ease;
+            padding: 5px;
+            background: rgba(18, 247, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        #menu-icon:hover {
+            color: #fff;
+            background: rgba(18, 247, 255, 0.2);
         }
         
         #menu-icon.bx-x {
-            transform: rotate(90deg);
+            transform: rotate(180deg);
+            color: #ff1257; /* Different color for close icon */
         }
         
         footer {
@@ -1303,6 +1330,14 @@ In addition, I bring practical DevOps experience, contributing to automated buil
         const navLinks = document.querySelectorAll('.navlist a');
         let isMenuOpen = false;
         
+        // Initialize menu as closed by default
+        function initMenu() {
+            navList.classList.remove('active');
+            menuIcon.classList.remove('bx-x');
+            menuIcon.classList.add('bx-menu');
+            isMenuOpen = false;
+        }
+        
         // Function to open the menu
         function openMenu() {
             navList.classList.add('active');
@@ -1329,51 +1364,53 @@ In addition, I bring practical DevOps experience, contributing to automated buil
             }
         });
         
-        // Close menu when clicking on a link
+        // Close menu when clicking on a link (for mobile)
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                closeMenu();
+                if (window.innerWidth <= 768) {
+                    closeMenu();
+                }
             });
         });
         
-        // Close menu when clicking outside (for all screen sizes)
+        // Close menu when clicking outside (for mobile)
         document.addEventListener('click', (e) => {
-            if (isMenuOpen && !navList.contains(e.target) && e.target !== menuIcon) {
+            if (isMenuOpen && window.innerWidth <= 768 && 
+                !navList.contains(e.target) && e.target !== menuIcon) {
                 closeMenu();
             }
         });
         
         // Close menu when scrolling (for mobile)
-        let scrollTimer;
         window.addEventListener('scroll', () => {
             if (window.innerWidth <= 768 && isMenuOpen) {
-                // Clear any existing timer
-                clearTimeout(scrollTimer);
-                
-                // Set a timer to close menu after scrolling stops
-                scrollTimer = setTimeout(() => {
-                    closeMenu();
-                }, 150);
+                closeMenu();
             }
         });
         
-        // Close menu on window resize (optional, for UX)
+        // Handle window resize
         window.addEventListener('resize', () => {
-            if (window.innerWidth > 768 && isMenuOpen) {
-                closeMenu();
+            if (window.innerWidth > 768) {
+                // On larger screens, ensure menu is visible and icon is hamburger
+                navList.classList.remove('active');
+                menuIcon.classList.remove('bx-x');
+                menuIcon.classList.add('bx-menu');
+                isMenuOpen = false;
+            } else {
+                // On mobile, ensure menu is closed
+                initMenu();
             }
         });
         
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                
                 const targetId = this.getAttribute('href');
                 if(targetId === '#') return;
                 
                 const targetElement = document.querySelector(targetId);
                 if(targetElement) {
+                    e.preventDefault();
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
@@ -1382,9 +1419,37 @@ In addition, I bring practical DevOps experience, contributing to automated buil
             });
         });
         
-        // Ensure menu starts closed on page load
-        window.addEventListener('DOMContentLoaded', () => {
-            closeMenu();
+        // Initialize menu on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            initMenu();
+            
+            // Highlight active nav link based on scroll position
+            const sections = document.querySelectorAll('section[id]');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.clientHeight;
+                    if(scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if(link.getAttribute('href').substring(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Ensure proper menu state on page refresh
+        window.addEventListener('load', () => {
+            if (window.innerWidth <= 768) {
+                initMenu();
+            }
         });
     </script>
 
