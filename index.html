@@ -301,48 +301,9 @@
             font-weight: 700;
         }
         
-        /* Original Text Animation Styles */
+        /* Role Text Animation - HIDDEN */
         .change-text {
-            margin-bottom: 25px;
-            height: 60px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .change-text h3 {
-            font-size: 1.8rem;
-            color: var(--text-white);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .change-text .word {
-            color: var(--primary-color);
-            position: absolute;
-            opacity: 0;
-            animation: wordChange 9s infinite;
-            font-weight: 700;
-        }
-        
-        .change-text .word:nth-child(1) {
-            animation-delay: 0s;
-        }
-        
-        .change-text .word:nth-child(2) {
-            animation-delay: 3s;
-        }
-        
-        .change-text .word:nth-child(3) {
-            animation-delay: 6s;
-        }
-        
-        @keyframes wordChange {
-            0%, 33%, 100% {
-                opacity: 0;
-            }
-            5%, 28% {
-                opacity: 1;
-            }
+            display: none; /* Hiding the role text */
         }
         
         .home-content p {
@@ -353,42 +314,44 @@
             max-width: 600px;
         }
         
-        /* Stats Section */
+        /* Stats Section - Smaller and Consistent */
         .stats-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 25px;
-            margin: 30px 0;
+            gap: 15px;
+            margin: 25px 0;
             justify-content: flex-start;
         }
         
         .stat-box {
             text-align: center;
-            min-width: 130px;
             background: var(--card-bg);
-            padding: 20px 15px;
-            border-radius: 10px;
+            padding: 15px 12px;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
             transition: var(--transition);
+            flex: 1;
+            min-width: 100px;
+            max-width: 120px;
         }
         
         .stat-box:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
             border-color: var(--primary-color);
-            box-shadow: 0 10px 20px rgba(18, 247, 255, 0.1);
+            box-shadow: 0 5px 15px rgba(18, 247, 255, 0.1);
         }
         
         .stat-number {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 700;
             color: var(--primary-color);
             display: block;
             line-height: 1;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
         
         .stat-label {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-white);
             opacity: 0.9;
             font-weight: 500;
@@ -397,7 +360,7 @@
         /* Info Box */
         .info-box {
             background: var(--card-bg);
-            padding: 20px;
+            padding: 18px;
             border-radius: 10px;
             margin: 25px 0;
             border-left: 4px solid var(--primary-color);
@@ -405,7 +368,7 @@
         
         .email-info h5 {
             color: var(--primary-color);
-            font-size: 14px;
+            font-size: 13px;
             margin-bottom: 5px;
             font-weight: 600;
             text-transform: uppercase;
@@ -414,13 +377,13 @@
         
         .email-info span {
             color: var(--text-white);
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 500;
         }
         
         /* Buttons */
         .btn-box {
-            margin: 30px 0;
+            margin: 25px 0;
         }
         
         .btn {
@@ -448,7 +411,7 @@
         .social-icons {
             display: flex;
             gap: 20px;
-            margin-top: 40px;
+            margin-top: 35px;
         }
         
         .social-icons a {
@@ -529,32 +492,15 @@
         /* ===== ABOUT SECTION ===== */
         .about {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 60px;
             align-items: center;
+            text-align: center;
         }
         
+        /* Hide about section image for both desktop and mobile */
         .img-about {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        
-        .img-about img {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 20px;
-            object-fit: cover;
-            border: 8px solid rgba(18, 247, 255, 0.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            transition: var(--transition);
-        }
-        
-        .img-about img:hover {
-            transform: scale(1.02);
-            border-color: rgba(18, 247, 255, 0.3);
+            display: none !important;
         }
         
         .about-content span {
@@ -586,6 +532,10 @@
             line-height: 1.8;
             margin-bottom: 20px;
             font-size: 16px;
+            text-align: left;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         /* ===== EDUCATION SECTION ===== */
@@ -1113,6 +1063,10 @@
                 width: 350px;
                 height: 350px;
             }
+            
+            .about-content p {
+                text-align: center;
+            }
         }
         
         @media (max-width: 768px) {
@@ -1142,17 +1096,9 @@
                 font-size: 2.2rem;
             }
             
-            .change-text h3 {
-                font-size: 1.5rem;
-            }
-            
             .img-box {
                 width: 300px;
                 height: 300px;
-            }
-            
-            .img-about {
-                display: none;
             }
             
             .about-content h2 {
@@ -1186,6 +1132,19 @@
             .mobile-nav-overlay.active + header .logo {
                 color: var(--primary-color);
             }
+            
+            .stat-box {
+                min-width: 90px;
+                padding: 12px 10px;
+            }
+            
+            .stat-number {
+                font-size: 22px;
+            }
+            
+            .stat-label {
+                font-size: 12px;
+            }
         }
         
         @media (max-width: 576px) {
@@ -1197,22 +1156,22 @@
                 font-size: 1.8rem;
             }
             
-            .change-text h3 {
-                font-size: 1.3rem;
-            }
-            
             .img-box {
                 width: 250px;
                 height: 250px;
             }
             
             .stat-box {
-                min-width: 110px;
-                padding: 15px 10px;
+                min-width: 85px;
+                padding: 10px 8px;
             }
             
             .stat-number {
-                font-size: 26px;
+                font-size: 20px;
+            }
+            
+            .stat-label {
+                font-size: 11px;
             }
             
             .btn {
@@ -1230,6 +1189,29 @@
             .experience-title,
             .project-title {
                 font-size: 20px;
+            }
+            
+            .stats-container {
+                gap: 12px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .stats-container {
+                gap: 10px;
+            }
+            
+            .stat-box {
+                min-width: 80px;
+                padding: 10px 6px;
+            }
+            
+            .stat-number {
+                font-size: 18px;
+            }
+            
+            .stat-label {
+                font-size: 10px;
             }
         }
         
@@ -1323,6 +1305,8 @@
     <section id="home" class="home">
         <div class="home-content scroll-scale">
             <h1>Hi! I'm Tadese Worku</h1>
+            
+            <!-- Role Text Hidden -->
             <div class="change-text">
                 <h3>And I'm</h3>
                 <h3>
@@ -1334,7 +1318,7 @@
             
             <p>Transforming complex problems into elegant technical solutions. Passionate about building scalable systems and API integrations.</p>
             
-            <!-- Stats Section -->
+            <!-- Stats Section - Smaller and Consistent -->
             <div class="stats-container">
                 <div class="stat-box">
                     <span class="stat-number">2+</span>
@@ -1409,6 +1393,7 @@
 
     <!-- About Section -->
     <section id="about" class="about">
+        <!-- About Image Hidden for both desktop and mobile -->
         <div class="img-about scroll-right">
             <img src="img/tade.jpg" alt="Tadese Worku">
         </div>
